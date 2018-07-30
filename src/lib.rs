@@ -98,6 +98,8 @@ impl Triple {
     }
 }
 
+// Implements the multiplication of triple and integer.
+// For example, (3, 4, 5) * 2 = (6, 8, 10).
 impl ops::Mul<u32> for Triple {
     type Output = Self;
     
@@ -106,6 +108,8 @@ impl ops::Mul<u32> for Triple {
     }
 }
 
+// Converts a tuple to Triple.
+// (3, 4, 5).into() = Triplet::new(3, 4, 5).
 impl From<(u32, u32, u32)> for Triple {
     fn from(t: (u32, u32, u32)) -> Self {
         Triple::new(t.0, t.1, t.2)
@@ -128,6 +132,7 @@ pub struct Triples {
     d: u32
 }
 
+// Creates an iterator over triples, given an initial Triplet.
 impl From<Triple> for Triples {
     fn from(t: Triple) -> Self {
         Triples { t, d: 0 }
@@ -137,6 +142,7 @@ impl From<Triple> for Triples {
 impl Iterator for Triples {
     type Item = Triple;
     
+    // Increments d, returns a new Triplet.
     fn next(&mut self) -> Option<Self::Item> {
         self.d += 1;
         Some(self.t * self.d)
@@ -191,6 +197,7 @@ impl PrimitiveTriples {
     }
 }
 
+// Berggren's matrices
 static A: [i8; 9] = [ 1, -2,  2,
                       2, -1,  2,
                       2, -2,  3 ];
@@ -201,6 +208,8 @@ static C: [i8; 9] = [-1,  2,  2,
                      -2,  1,  2,
                      -2,  2,  3 ];
 
+// Multiplies a single matrix row and a column vector.
+// Hides conversion casts.
 macro_rules! mul {
     ( row($mat:ident, $row_idx:expr), $t:ident ) => ({
         const I: usize = 3 * $row_idx;
@@ -214,6 +223,8 @@ macro_rules! mul {
 impl Iterator for PrimitiveTriples {
     type Item = Triple;
     
+    // Pops the front triple, derives three children triples using the matrices above, and pushes
+    // them to the queue.
     fn next(&mut self) -> Option<Self::Item> {
         fn mul_triple(t: Triple, mat: &[i8; 9]) -> Triple {
             Triple(
