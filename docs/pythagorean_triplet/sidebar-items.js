@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["find","Tries to find a Pythagorean triple (a, b, c), such that a + b + c = 1000."]],"struct":[["PrimitiveTriples","An infinite iterator over primitive Pythagorean triples."],["Triple","Represents a Pythagorean triple."],["Triples","An infinite iterator over triples derived from a primitive Pythagorean triple."]]});
